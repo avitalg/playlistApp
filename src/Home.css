@@ -1,0 +1,29 @@
+.add-room{
+  cursor: pointer;
+  border: 2px solid #292F33;
+  border-radius: 4px;
+  padding: 5px;
+  width: 100px;
+  text-align: center;
+  margin: 10px auto;
+  font-weight: bold;
+}
+
+.ask-room{
+  margin-top: 100px;
+  text-transform: capitalize;
+}
+
+input{
+  border: 1px solid #292F33;
+  border-radius: 4px;
+  box-shadow: none;
+  padding: 5px;
+  height: 20px;
+  width: 50%;
+  font-size: 16px
+}
+
+.home-logo{
+  height: 86px;
+}

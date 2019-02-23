@@ -1,0 +1,25 @@
+.media-container{
+	display: -webkit-box;
+  	display: -moz-box;
+  	display: -ms-flexbox;
+  	display: -webkit-flex;
+  	display: flex;
+  	justify-content: center;
+}
+
+.add-media{
+	margin: 10px;
+}
+
+.add-media input{
+	min-width: 400px;
+}
+
+.add-media button{
+    background: #a2a2a2;
+    border: 2px solid #292F33;
+    border-radius: 5px;
+    padding: 4px 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+}

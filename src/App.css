@@ -7,19 +7,18 @@
   height: 40vmin;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body{
+	font-family: 'Raleway', sans-serif;
+	background: #336699;
+	color: #292F33;
 }
 
-.App-link {
-  color: #61dafb;
+main{
+	height: 100vh;
+	border-top-left-radius: 30px;
+    background: white;
+    border: 1px solid transparent;
+    border-top-right-radius: 30px;
 }
 
 @keyframes App-logo-spin {

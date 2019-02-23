@@ -1,0 +1,36 @@
+#mainHeader ul{
+	list-style: none;
+}
+
+#mainHeader ul li {
+	display: inline-block;
+	padding: 5px 12px;
+	font-size: 16px;
+	cursor: pointer;
+	-webkit-transition: all 0.2s; /* Safari */
+  	transition: all 0.2s;
+  	color: #fff;
+}
+
+#mainHeader ul li:hover{
+	font-weight: bold;
+	font-size: 18px;
+}
+
+#logo{
+	display: inline-block;
+	margin: 16px;
+}
+
+#logo img{
+    height: 35px;
+}
+
+#mainHeader .menu{
+	float: right;
+}
+
+#mainHeader a{
+	color: inherit;
+	text-decoration: none;
+}

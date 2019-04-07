@@ -55,7 +55,7 @@ componentDidUpdate(prevProps, prevState, snapshot){
 
   getRoomData = () =>{
     let xhttp = new XMLHttpRequest(), that = this;
-    xhttp.open("GET", process.env.REACT_APP_BASE_URL+"/getRoom/"+this.props.match.params.number, true);
+    xhttp.open("GET", process.env.REACT_APP_API_URL+"/getRoom/"+this.props.match.params.number, true);
     xhttp.onload = function() {
       let resObj = JSON.parse(xhttp.responseText);
       console.log(resObj );
@@ -71,7 +71,7 @@ componentDidUpdate(prevProps, prevState, snapshot){
 
   addToList = () => {
       let xhttp = new XMLHttpRequest(), that = this, data={uri:that.state.addUri};
-      xhttp.open("PUT", process.env.REACT_APP_BASE_URL+"/addToList/"+that.props.match.params.number, true);
+      xhttp.open("PUT", process.env.REACT_APP_API_URL+"/addToList/"+that.props.match.params.number, true);
       xhttp.setRequestHeader("Content-type", "application/json");
       xhttp.onload = function() {
         console.log(xhttp.responseText );

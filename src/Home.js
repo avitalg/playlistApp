@@ -6,7 +6,7 @@ class Home extends Component {
 
   addRoom = () => {
     var xhttp = new XMLHttpRequest(), data = {"name": this.state.roomName};
-    xhttp.open("POST", "http://api.rhythmes.com"+"/addRoom/", true);
+    xhttp.open("POST", process.env.REACT_APP_API_URL+"/addRoom/", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.onload = function(data){
       let response = JSON.parse(this.responseText);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Room.css';
+import './css/Room.css';
 import MusicList from './MusicList';
 import MediaPlayer from './MediaPlayer';
 
@@ -30,7 +30,7 @@ componentDidUpdate(prevProps, prevState, snapshot){
 
   updateCurrVid = () =>{
     let xhttp = new XMLHttpRequest(), that = this;
-    xhttp.open("PUT", "http://localhost:8080/updateCurrVid/"+this.props.match.params.number+"/"+this.state.currId, true);
+    xhttp.open("PUT", process.env.REACT_APP_API_URL+"/updateCurrVid/"+this.props.match.params.number+"/"+this.state.currId, true);
     xhttp.onload = function() {
       let resObj = JSON.parse(xhttp.responseText);
       console.log("update curr vid" );

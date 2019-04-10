@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';

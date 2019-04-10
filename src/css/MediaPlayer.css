@@ -1,0 +1,12 @@
+.mediaPlayer{
+	width: 560px;
+	height: 315px;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+ .mediaPlayer{
+ 	width: 100%;
+ }
+
+}

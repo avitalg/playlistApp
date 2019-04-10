@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContainer,
 MDBHamburgerToggler } from 'mdbreact';
 import logo from './imgs/logo.png';
- import './header.css';
+ import './css/header.css';
 
 class Header extends Component {
 state = {

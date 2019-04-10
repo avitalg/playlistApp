@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './MediaPlayer.css';
+import './css/MediaPlayer.css';
 import YouTube from 'react-youtube';
 
 class MediaPlayer extends Component {

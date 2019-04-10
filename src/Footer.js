@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
- import './Footer.css';
+ import './css/Footer.css';
 import facebook from './imgs/facebook_logo.svg';
 // this component will be rendered by our <___Router>
 const Footer = () => (

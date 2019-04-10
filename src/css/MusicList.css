@@ -35,3 +35,11 @@
     border: 1px solid #292F33;
     background: #f2f2f2;
 }
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+.list{
+    max-width: initial;
+ }
+
+}

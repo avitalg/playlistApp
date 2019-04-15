@@ -6,28 +6,6 @@
 	min-width: 300px;
 }
 
-.MusicItem {
-    padding: 15px 10px;
-    border: 1px solid #494949;
-    cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    background: #fff;
-    transition: all 0.2s;
-}
-
-.MusicItem:hover{
-	background: #f1f1f1;
-	font-weight: bold;
-	color: #336699;
-}
-
-[data-curr="true"]{
-	font-weight: bold;
-	color: #336699;
-}
-
 .list{
 	height: 388px;
     overflow: auto;

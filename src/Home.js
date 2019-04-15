@@ -5,7 +5,7 @@ import Loader from './Loader';
 import axios from 'axios';
 
 class Home extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       loader: false
@@ -13,51 +13,37 @@ class Home extends Component {
   }
 
   addRoom = () => {
-    this.setState({loader:true});
-    var xhttp = new XMLHttpRequest(), data = {"name": this.state.roomName}, that = this;
-    axios.post( process.env.REACT_APP_API_URL+"/addRoom/", data)
+    this.setState({ loader: true });
+    var data = { "name": this.state.roomName }, that = this;
+    axios.post(process.env.REACT_APP_API_URL + "/addRoom/", data)
       .then(res => {
-        that.setState({loader:false});
+        that.setState({ loader: false });
         // let response = JSON.parse(this.responseText);
-        if(res.data && res.data.data && res.data.data._id){
-          window.location.href="/room/"+res.data.data._id;
+        if (res.data && res.data.data && res.data.data._id) {
+          window.location.href = "/room/" + res.data.data._id;
         }
         console.log(res);
       });
-    // xhttp.open("POST", process.env.REACT_APP_API_URL+"/addRoom/", true);
-    // xhttp.setRequestHeader("Content-type", "application/json");
-    // xhttp.onload = function(data){
-    //   that.setState({loader:false});
-    //   let response = JSON.parse(this.responseText);
-    //   if(response.data && response.data.id){
-    //     window.location.href="/room/"+response.data.id;
-    //   }
-    //   console.log(data);
-    // }
-    // xhttp.onerror=function(error){
-    //   console.log(error);
-    // }
-    // xhttp.send(JSON.stringify(data));
   }
 
   inputChanged = (e) => {
-    this.setState({roomName: e.target.value});
+    this.setState({ roomName: e.target.value });
   }
 
   render() {
     return (
       <div className="App">
-        <img className="home-logo" src={logo} alt="home-logo"/>
+        <img className="home-logo" src={logo} alt="home-logo" />
         <div className="ask-room">
-            <h2>get a room</h2>
-            <input type="text" placeholder="Enter Room Name" onChange={this.inputChanged}/>
-           {(!this.state.loader)? 
-           <div className="add-room" onClick={()=>{this.addRoom()}}>
-           Add Room
-           </div> : 
-           <Loader/>
+          <h2>get a room</h2>
+          <input type="text" placeholder="Enter Room Name" onChange={this.inputChanged} />
+          {(!this.state.loader) ?
+            <div className="add-room" onClick={() => { this.addRoom() }}>
+              Add Room
+           </div> :
+            <Loader />
           }
-            
+
         </div>
       </div>
     );

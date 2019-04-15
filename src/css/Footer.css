@@ -17,3 +17,11 @@
 	font-size: 10px;
 	cursor: pointer;
 }
+
+#mainFooter .sharing li{
+	display:inline-block;
+}
+
+#mainFooter .sharing img{
+	height: 20px;
+}

@@ -3,8 +3,15 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCol
 MDBHamburgerToggler } from 'mdbreact';
 import logo from './imgs/logo.png';
  import './css/header.css';
+ import socketIOClient from "socket.io-client";
+ var socket;
 
 class Header extends Component {
+  constructor() {
+      super();
+      
+  socket = socketIOClient(process.env.REACT_APP_API_URL);
+  }
 state = {
   collapse1: false,
   collapseID: ''
@@ -49,4 +56,5 @@ render() {
   }
 }
 
-export default Header;
+export { Header, socket };
+  

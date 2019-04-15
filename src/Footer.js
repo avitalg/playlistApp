@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
  import './css/Footer.css';
-import facebook from './imgs/facebook_logo.svg';
 // this component will be rendered by our <___Router>
 const Footer = () => (
   <footer id="mainFooter">
     <div className="sharing">
+      <ul>
+        <li><a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src={require('./imgs/social_media/whatsapp.png')}/></a></li>
+        <li><a href="https://www.facebook.com/sharer.php?u=http://www.ynet.co.il/articles/0,7340,L-5458282,00.html" target="_blank"><img src={require('./imgs/social_media/facebook.png')}/></a></li>
+        <li><a href="#" target="_blank"><img src={require('./imgs/social_media/instagram.png')}/></a></li>
 
-    <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="#"/></a>
-    <a href="https://www.facebook.com/sharer.php?u=http://www.ynet.co.il/articles/0,7340,L-5458282,00.html" target="_blank"><img src={facebook}/></a>
+      </ul>
+
+      
     </div>
     <div className="menu">
 	    <ul>

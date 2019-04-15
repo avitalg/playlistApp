@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import './css/Room.css';
 import MusicList from './MusicList';
 import MediaPlayer from './MediaPlayer';
+import Loader from './Loader';
 
 class Room extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       result: "test",
       currUri: "#",
       currId: -1,
-      end: false
+      end: false,
+      loader: false,
     }
+
+    this.changeMusic = this.changeMusic.bind(this);
   }
 
   componentDidMount() {
@@ -21,14 +25,25 @@ class Room extends Component {
 
 componentDidUpdate(prevProps, prevState, snapshot){
 
-    if (this.state.currId !== prevState.currId && this.state.result.list && this.state.currId<this.state.result.list.length) {
-      this.setState({currUri: this.state.result.list[this.state.currId].uri});
-      this.updateCurrVid();
-    }
-
+  //last song on the list wont change currUri;
+  if(this.state.currId == -1 && prevState.currId!=1){
+    return;
   }
 
+  if (this.state.currId !== prevState.currId && this.state.result.list) {
+    this.setState({currUri: this.getUriById(this.state.currId)});
+    this.updateCurrVid();
+  }
+
+}
+
   updateCurrVid = () =>{
+
+    if(!this.state.currId || this.state.currId == -1){
+      this.setState({end:true});
+      return;
+    }
+
     let xhttp = new XMLHttpRequest(), that = this;
     xhttp.open("PUT", process.env.REACT_APP_API_URL+"/updateCurrVid/"+this.props.match.params.number+"/"+this.state.currId, true);
     xhttp.onload = function() {
@@ -45,11 +60,11 @@ componentDidUpdate(prevProps, prevState, snapshot){
 
   newDataHandler = (data) =>{
      this.setState({result : data });
-      if(this.state.currId == -1 && data.list.length>0){
-        this.setState({currId:data.play, currUri:data.list[0].uri})
+      if(this.state.currId == -1 && this.getNextVidId() != -1 && !this.state.end ){
+        this.setState({currId:data.play})
       }
-      if(this.state.end && this.state.currId<data.list.length-1){
-        this.setState({currId:this.state.currId+1, end:false})
+      if(this.state.end && this.getNextVidId() != -1 ){
+        this.setState({currId:this.getNextVidId(), end:false})
       }
   }
 
@@ -71,9 +86,11 @@ componentDidUpdate(prevProps, prevState, snapshot){
 
   addToList = () => {
       let xhttp = new XMLHttpRequest(), that = this, data={uri:that.state.addUri};
+      this.setState({loader:true});
       xhttp.open("PUT", process.env.REACT_APP_API_URL+"/addToList/"+that.props.match.params.number, true);
       xhttp.setRequestHeader("Content-type", "application/json");
       xhttp.onload = function() {
+        that.setState({loader:false});
         console.log(xhttp.responseText );
         let resObj = JSON.parse(xhttp.responseText);
         if (xhttp.status === 200 && resObj.status == "success" && resObj.data !=null && resObj.data.list.length>0) {
@@ -108,28 +125,51 @@ componentDidUpdate(prevProps, prevState, snapshot){
     let item;
     for(let i=0; i<this.state.result.list.length; i++){
       item = this.state.result.list[i];
-      if(item.id == itemId){
+      if(item._id == itemId){
         console.log("found");
-        this.setState({currUri : item.uri, currId: i});
+        this.setState({currUri : item.uri, currId: item._id});
         return;
       } 
     }
 
-    console.log("no");
+    console.log("not found");
   }
 
   changedSong = (e) =>{
         this.setState({addUri: e.target.value});
   }
 
+  getNextVidId = () => {
+    if(this.state.currId == -1 && this.state.result.list.length > 0 ){
+      return  this.state.result.list[0]._id;
+    }
+    for(let i=0; i<this.state.result.list.length-1 ; i++){
+      if(this.state.result.list[i]._id == this.state.currId){
+        return this.state.result.list[i+1]._id;
+      }
+    }
+    return -1;
+  }
+
+  getUriById = (vidId) => {
+    for(let i=0; i<this.state.result.list.length ; i++){
+      if(this.state.result.list[i]._id == vidId){
+        return this.state.result.list[i].uri;
+      }
+    }
+    return "#";
+  }
+
   onPlayerStateChange = (event) => {
-        console.log("check");
+        console.log("onPlayerStateChange");
         console.log(event.data);
-        if(event.data === 0 &&  this.state.currId<this.state.result.list.length-1) {          
-          this.setState({currId:this.state.currId+1})
-        }
-        if(event.data == 0 &&  this.state.currId == this.state.result.list.length-1) {
+        //end of playlist
+        if(event.data == 0 &&  this.getNextVidId() == -1) {
           this.setState({end: true});
+        }
+        //move to next video
+        else if(event.data === 0 ) {          
+          this.setState({currId: this.getNextVidId()})
         }
       }
 
@@ -137,10 +177,14 @@ componentDidUpdate(prevProps, prevState, snapshot){
     return (
       <div className="App">
         <h1>Room {this.state.result.name}</h1>
-        <div className="show-room" onClick={this.check}>
+        <div className="show-room">
         <div className="add-media">
             <input type="url" onChange={this.changedSong} placeholder="https://www.youtube.com/watch?v=video_id"/>
-            <button onClick={this.addToList}>Add</button>
+            {
+              (!this.state.loader)?
+              <button onClick={this.addToList}>Add</button>:
+              <Loader/>
+            }
             {(this.state.error)?<div className="error">
               Wrong Uri
             </div>:null}

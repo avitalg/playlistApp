@@ -1,9 +1,10 @@
-
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
- .player{
-	width: 100%    !important;
-	height: auto   !important;
- }
-
+	/* For mobile phones: */
+	.player {
+		width: 100% !important;
+		height: auto !important;
+	}
+	iframe#widget2 {
+		width: 100%;
+	}
 }

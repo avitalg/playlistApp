@@ -7,18 +7,18 @@
   height: 40vmin;
 }
 
-body{
-	font-family: 'Raleway', sans-serif;
-	background: #336699;
-	color: #292F33;
+body {
+  font-family: 'Raleway', sans-serif;
+  background: #336699;
+  color: #292F33;
 }
 
-main{
-	height: 100vh;
-	border-top-left-radius: 30px;
-    background: white;
-    border: 1px solid transparent;
-    border-top-right-radius: 30px;
+main {
+  height: 100vh;
+  border-top-left-radius: 30px;
+  background: white;
+  border: 1px solid transparent;
+  border-top-right-radius: 30px;
 }
 
 @keyframes App-logo-spin {
@@ -27,5 +27,20 @@ main{
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  main {
+    height: 100%;
+  }
+
+  body{
+    background: #fff;
+  }
+
+  #main-header{
+    background: #336699;
   }
 }

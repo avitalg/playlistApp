@@ -16,6 +16,7 @@ class Room extends Component {
       currId: -1,
       end: false,
       loader: false,
+      errorMsg: "Oops! Something went wrong "
     }
 
     this.changeMusic = this.changeMusic.bind(this);
@@ -58,25 +59,39 @@ class Room extends Component {
   }
 
   newDataHandler = (data) => {
-    this.setState({ result: data });
-    if (this.state.currId == -1 && this.getNextVidId() != -1 && !this.state.end) {
+    if(!data || data.status == 'failure'){
+      this.setState({ error: true });
+      return;
+    }
+
+    this.setState({ result: data, error: false });
+    let nextVidId = this.getNextVidId();
+    if (this.state.currId == -1 && nextVidId != -1 && !this.state.end) {
+      //first video
+      if(!data.play) return this.setState({ currId: nextVidId })
       this.setState({ currId: data.play })
     }
-    if (this.state.end && this.getNextVidId() != -1) {
-      this.setState({ currId: this.getNextVidId(), end: false })
+    if (this.state.end && nextVidId != -1) {
+      this.setState({ currId: nextVidId, end: false })
     }
+
   }
 
   addToList = () => {
     let that = this, data = { uri: that.state.addUri };
-    this.setState({ loader: true });
-    axios.put(process.env.REACT_APP_API_URL + "/addToList/" + this.props.match.params.number, data).then(response => {
-      that.setState({ loader: false });
-      if (response.status !== 200 || response.data.status != "success") {
-        that.setState({ error: true });
-        console.log('Request failed.  Returned status of ' + response.status);
-      }
-    })
+    socket.emit('add_to_list',{
+      _id: this.props.match.params.number,
+      uri: that.state.addUri
+    });
+    // this.setState({ loader: true });
+    // axios.put(process.env.REACT_APP_API_URL + "/addToList/" + this.props.match.params.number, data).then(response => {
+    //   socket.emit("get_data", { "_id": this.props.match.params.number });
+    // }).catch(error=>{
+    //   console.log('Request failed.  Returned status of ' + error.status);
+    //   that.setState({ error: true, errorMsg: "Oops! Something went wrong." });
+    // }).then(()=>{
+    //   that.setState({ loader: false });
+    // });
   }
 
   showList = () => {
@@ -155,7 +170,7 @@ class Room extends Component {
                 <Loader />
             }
             {(this.state.error) ? <div className="error">
-              Wrong Uri
+              {this.state.errorMsg}
             </div> : null}
           </div>
           <div className="media-container">

@@ -18,6 +18,7 @@
   /* For mobile phones: */
 .list{
     max-width: initial;
+    margin-bottom: 15px;
  }
 
 }

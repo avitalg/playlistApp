@@ -37,4 +37,8 @@
     margin-top: 5px;
     width: 130px;
   }
+
+  .add-media input {
+    min-width: 95%;
+  }
 }

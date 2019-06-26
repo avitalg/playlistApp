@@ -1,5 +1,18 @@
+.empty-vid{
+	background: gray;
+	height: 390px;
+	width: 640px;
+}
+
+.player{
+	width: 640px;
+}
+
 @media only screen and (max-width: 768px) {
 	/* For mobile phones: */
+	.empty-vid{
+		width: 100%;
+	}
 	.player {
 		width: 100% !important;
 		height: auto !important;

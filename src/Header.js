@@ -3,7 +3,9 @@ import {
   MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContainer,
   MDBHamburgerToggler
 } from 'mdbreact';
+import MediaQuery from 'react-responsive';
 import logo from './imgs/logo.png';
+import logoMobile from './imgs/logo-mobile.png';
 import './css/header.css';
 import socketIOClient from "socket.io-client";
 var socket;
@@ -36,9 +38,14 @@ class Header extends Component {
         <MDBContainer>
           <MDBNavbar color="amber lighten-4" dark>
             <MDBContainer>
-              <MDBNavbarBrand className="white-text">
+              <MDBNavbarBrand href="/" className="white-text">
                 <div id="logo">
-                  <img src={logo} alt="logo" />
+                  <MediaQuery minWidth={768}>
+                    <img src={logo} alt="logo" />
+                  </MediaQuery>
+                  <MediaQuery maxWidth={767}>
+                    <img src={logoMobile} alt="logo" />
+                  </MediaQuery>
                 </div>
               </MDBNavbarBrand>
               <MDBHamburgerToggler color="#fff" id="hamburger1" onClick={() => this.toggleSingleCollapse('collapse1')} />

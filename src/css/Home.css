@@ -1,12 +1,7 @@
 .add-room{
-  cursor: pointer;
-  border: 2px solid #292F33;
-  border-radius: 4px;
   padding: 5px;
-  width: 100px;
-  text-align: center;
+  width: 115px;
   margin: 10px auto;
-  font-weight: bold;
 }
 
 .ask-room{
@@ -19,13 +14,18 @@ input{
   border-radius: 4px;
   box-shadow: none;
   padding: 5px;
-  height: 30px;
+  height: 40px;
   width: 50%;
   font-size: 16px
 }
 
 .home-logo{
   height: 86px;
+  transition: 2s all;
+}
+
+.home-logo:hover{
+  transform: scale(1.5);
 }
 
 @media only screen and (max-width: 768px) {

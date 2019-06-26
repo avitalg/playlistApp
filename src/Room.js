@@ -166,7 +166,7 @@ class Room extends Component {
             <input type="url" onChange={this.changedSong} placeholder="https://www.youtube.com/watch?v=video_id" />
             {
               (!this.state.loader) ?
-                <button onClick={this.addToList}>Add</button> :
+                <button className="site-btn" onClick={this.addToList}>Add</button> :
                 <Loader />
             }
             {(this.state.error) ? <div className="error">

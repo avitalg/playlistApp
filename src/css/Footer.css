@@ -16,6 +16,12 @@
 	padding: 5px 12px;
 	font-size: 10px;
 	cursor: pointer;
+	transition: 0.5s all;
+}
+
+#mainFooter ul li:hover{
+	color: #30C5FF;
+	font-size: 11px;
 }
 
 #mainFooter .sharing li{

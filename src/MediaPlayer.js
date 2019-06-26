@@ -63,6 +63,7 @@ class MediaPlayer extends Component {
 
   render() {
     return (
+      (this.getId(this.props.uri) === "false")? <div className='empty-vid'></div> : 
       <YouTube
         videoId={this.getId(this.props.uri)}
         opts={this.state.options}

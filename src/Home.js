@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './imgs/logo-blue.png';
+import logo from './imgs/logo-2colors.png';
 import './css/Home.css';
 import Loader from './Loader';
 import axios from 'axios';
@@ -38,7 +38,7 @@ class Home extends Component {
           <h2>get a room</h2>
           <input type="text" placeholder="Enter Room Name" onChange={this.inputChanged} />
           {(!this.state.loader) ?
-            <div className="add-room" onClick={() => { this.addRoom() }}>
+            <div className="add-room site-btn" onClick={() => { this.addRoom() }}>
               Add Room
            </div> :
             <Loader />

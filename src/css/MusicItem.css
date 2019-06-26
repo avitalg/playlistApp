@@ -12,10 +12,24 @@
 .MusicItem:hover{
 	background: #f1f1f1;
 	font-weight: bold;
-	color: #336699;
+    color: #30C5FF;
+    position: relative;
+    height: 56px;
+}
+
+.MusicItem span:hover{
+    position: absolute;
+    animation: scrollTitle 20s infinite;
 }
 
 [data-curr="true"]{
 	font-weight: bold;
-	color: #336699;
+	color: #47d664;
+}
+
+@keyframes scrollTitle {
+	0%   {left: 0;}
+    25% {left: -600px;}
+    50%{left:300px;}
+    100%{left: 0px;}
 }

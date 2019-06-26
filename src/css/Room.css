@@ -12,21 +12,13 @@
 }
 
 .add-media {
-  margin: 10px;
+  margin: 10px 10px 40px;
 }
 
 .add-media input {
   min-width: 400px;
 }
 
-.add-media button {
-  background: #a2a2a2;
-  border: 2px solid #292F33;
-  border-radius: 5px;
-  padding: 2px 15px;
-  cursor: pointer;
-  text-transform: uppercase;
-}
 
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */

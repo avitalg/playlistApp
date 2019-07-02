@@ -17,10 +17,14 @@
     height: 56px;
 }
 
-.MusicItem span:hover{
-    position: absolute;
-    animation: scrollTitle 20s infinite;
+.MusicItem span{
+    display: block;
 }
+
+ .MusicItem span:hover{
+    transition: opacity 0.5s ease-out;
+    animation: scrollTitle 15s linear infinite;
+} 
 
 [data-curr="true"]{
 	font-weight: bold;
@@ -28,8 +32,7 @@
 }
 
 @keyframes scrollTitle {
-	0%   {left: 0;}
-    25% {left: -600px;}
-    50%{left:300px;}
-    100%{left: 0px;}
+	100% { 
+        transform: translateX(-66.6666%);  
+      }
 }

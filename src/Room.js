@@ -4,8 +4,9 @@ import './css/Room.css';
 import MusicList from './MusicList';
 import MediaPlayer from './MediaPlayer';
 import MusicItem from './MusicItem';
+import SearchList from './SearchList';
 import Loader from './Loader';
-import { socket } from "./Header";
+import socketIOClient from "socket.io-client";
 
 class Room extends Component {
   constructor(props) {
@@ -16,19 +17,25 @@ class Room extends Component {
       currId: -1,
       end: false,
       loader: false,
-      errorMsg: "Oops! Something went wrong "
+      errorMsg: "Oops! Something went wrong ",
+      searchType: "text",
+      songList: [],
+      showSearchList: false,
+      searchTO: null,
+      socket : socketIOClient(process.env.REACT_APP_API_URL)
     }
 
     this.changeMusic = this.changeMusic.bind(this);
   }
 
   componentWillUnmount() {
-    socket.off("get_data");
+    this.state.socket.off("get_data");
   }
 
   componentDidMount() {
-    socket.emit("initial_data", { "_id": this.props.match.params.number });
-    socket.on("get_data", this.newDataHandler);
+    this.state.socket.emit("initial_data", { "_id": this.props.match.params.number });
+    this.state.socket.on("get_data", this.newDataHandler);
+    this.state.socket.on("search_song", this.newSearchList);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -59,7 +66,7 @@ class Room extends Component {
   }
 
   newDataHandler = (data) => {
-    if(!data || data.status == 'failure'){
+    if (!data || data.status === 'failure') {
       this.setState({ error: true });
       return;
     }
@@ -68,7 +75,7 @@ class Room extends Component {
     let nextVidId = this.getNextVidId();
     if (this.state.currId == -1 && nextVidId != -1 && !this.state.end) {
       //first video
-      if(!data.play) return this.setState({ currId: nextVidId })
+      if (!data.play) return this.setState({ currId: nextVidId })
       this.setState({ currId: data.play })
     }
     if (this.state.end && nextVidId != -1) {
@@ -79,19 +86,11 @@ class Room extends Component {
 
   addToList = () => {
     let that = this, data = { uri: that.state.addUri };
-    socket.emit('add_to_list',{
+    this.state.socket.emit('add_to_list', {
       _id: this.props.match.params.number,
       uri: that.state.addUri
     });
-    // this.setState({ loader: true });
-    // axios.put(process.env.REACT_APP_API_URL + "/addToList/" + this.props.match.params.number, data).then(response => {
-    //   socket.emit("get_data", { "_id": this.props.match.params.number });
-    // }).catch(error=>{
-    //   console.log('Request failed.  Returned status of ' + error.status);
-    //   that.setState({ error: true, errorMsg: "Oops! Something went wrong." });
-    // }).then(()=>{
-    //   that.setState({ loader: false });
-    // });
+
   }
 
   showList = () => {
@@ -157,18 +156,69 @@ class Room extends Component {
     }
   }
 
+  newSearchList = (result) => {
+    if (!result || result.status === 'failure') {
+      this.setState({ error: true, showSearchList: false });
+      return;
+    }
+
+    let songList = [];
+    for (let i = 0; i < result.length; i++) {
+      songList.push({ title: result[i].title, desc: result[i].description, img: result[i].thumbnails.default.url, id: result[i].sid });
+    }
+    console.log("newSearchList");
+    this.setState({ songList: songList, error: false, showSearchList: true });
+  }
+
+  searchSong = (e) => {
+    this.setState({ showSearchList: false });
+    clearTimeout(this.state.searchTO);
+    this.setState({
+      searchTO: setTimeout(function (value, that) {
+        if (value.length < 3) {
+          console.log("short");
+          that.setState({ showSearchList: false });
+          return;
+        }
+        that.state.socket.emit('search_song', {
+          _id: that.props.match.params.number,
+          q: value
+        });
+      }, 700, e.target.value, this)
+    });
+  }
+
+  addMusic = (vidId) => {
+    console.log(vidId);
+    this.setState({ showSearchList: false });
+    this.state.socket.emit('add_to_list', {
+      _id: this.props.match.params.number,
+      uri: "https://www.youtube.com/watch?v=" + vidId
+    });
+  }
+
+  searchMethod = (type = "text") => {
+    switch (type) {
+      case "url":
+        return (
+          <input type="url" onChange={this.changedSong} placeholder="https://www.youtube.com/watch?v=video_id" />
+        )
+
+      case "text":
+        return <div><input type="text" onKeyUp={this.searchSong} placeholder="Enter song name..." />
+          {(this.state.showSearchList) ? <SearchList list={this.state.songList} click={this.addMusic} /> : null}
+        </div>
+    }
+
+  }
+
   render() {
     return (
       <div className="App">
-        <h1>Room {this.state.result.name}</h1>
+        <h1>{this.state.result.name} Room</h1>
         <div className="show-room">
           <div className="add-media">
-            <input type="url" onChange={this.changedSong} placeholder="https://www.youtube.com/watch?v=video_id" />
-            {
-              (!this.state.loader) ?
-                <button className="site-btn" onClick={this.addToList}>Add</button> :
-                <Loader />
-            }
+            {this.searchMethod(this.state.searchType)}
             {(this.state.error) ? <div className="error">
               {this.state.errorMsg}
             </div> : null}

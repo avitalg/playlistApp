@@ -7,15 +7,12 @@ import MediaQuery from 'react-responsive';
 import logo from './imgs/logo.png';
 import logoMobile from './imgs/logo-mobile.png';
 import './css/header.css';
-import socketIOClient from "socket.io-client";
-var socket;
 
 class Header extends Component {
   constructor() {
     super();
-
-    socket = socketIOClient(process.env.REACT_APP_API_URL);
   }
+
   state = {
     collapse1: false,
     collapseID: ''
@@ -67,4 +64,4 @@ class Header extends Component {
   }
 }
 
-export { Header, socket };
+export { Header };

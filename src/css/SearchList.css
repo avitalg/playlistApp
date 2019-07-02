@@ -1,0 +1,22 @@
+
+.search-list ul{
+    list-style-type: none;
+    padding: 0;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.search-list ul li{
+    padding: 10px;
+    text-align: left;
+    border: 1px solid black;
+    cursor: pointer;
+    transition: 0.2s all;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-list ul li:hover{
+    background: #f1f1f1;
+}

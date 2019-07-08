@@ -21,6 +21,9 @@ const Footer = () => (
         <li></li>
       </ul>
     </div>
+    <div className="rights">
+    ©  {new Date().getFullYear()} Avital Glazer All rights reserved
+      </div>
   </footer>
 )
 

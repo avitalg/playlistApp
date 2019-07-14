@@ -5,7 +5,7 @@ const Footer = () => (
   <footer id="mainFooter">
     <div className="sharing">
       <ul>
-        <li><a href={"whatsapp://send?text=Check out that playlist!" + window.location.href} data-action="share/whatsapp/share"><img src={require('./imgs/social_media/whatsapp.png')} /></a></li>
+        <li><a href={"whatsapp://send?text=Check out that playlist! " + window.location.href} data-action="share/whatsapp/share"><img src={require('./imgs/social_media/whatsapp.png')} /></a></li>
         <li><a href={"https://www.facebook.com/sharer.php?u=" + window.location.href} target="_blank"><img src={require('./imgs/social_media/facebook.png')} /></a></li>
         <li><a href="#" target="_blank"><img src={require('./imgs/social_media/instagram.png')} /></a></li>
 
@@ -22,7 +22,7 @@ const Footer = () => (
       </ul>
     </div>
     <div className="rights">
-    ©  {new Date().getFullYear()} Avital Glazer All rights reserved
+      ©  {new Date().getFullYear()} Avital Glazer All rights reserved
       </div>
   </footer>
 )

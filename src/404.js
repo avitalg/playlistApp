@@ -3,7 +3,7 @@ import './css/Error.css';
 
 const Error = () => (
   <div className="err-404">
-    404 page
+    Page Not Found
   </div>
 )
 

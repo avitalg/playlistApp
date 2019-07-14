@@ -11,11 +11,10 @@ import './css/header.css';
 class Header extends Component {
   constructor() {
     super();
-  }
-
-  state = {
-    collapse1: false,
-    collapseID: ''
+    this.state = {
+      collapse1: false,
+      collapseID: ''
+    };
   }
 
   toggleCollapse = collapseID => () => {

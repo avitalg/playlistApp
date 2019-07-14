@@ -8,11 +8,11 @@ import Error from './404.js';
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path='/' component={Home}/>
-      <Route exact path='/about' component={About}/>      
-      <Route exact path='/room/:number' component={Room}/>
-      <Route exact path='/404' component={Error}/>
-      <Redirect to='/404'/>
+      <Route exact path='/' component={Home} />
+      <Route exact path='/about' component={About} />
+      <Route exact path='/room/:number' component={Room} />
+      <Route exact path='/404' component={Error} />
+      <Redirect to='/404' />
     </Switch>
   </main>
 )

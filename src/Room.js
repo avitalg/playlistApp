@@ -22,7 +22,7 @@ class Room extends Component {
       songList: [],
       showSearchList: false,
       searchTO: null,
-      socket : socketIOClient(process.env.REACT_APP_API_URL)
+      socket: socketIOClient(process.env.REACT_APP_API_URL)
     }
 
     this.changeMusic = this.changeMusic.bind(this);
@@ -110,14 +110,16 @@ class Room extends Component {
   }
 
   changeMusic = (itemId, event) => {
-    let item;
-    for (let i = 0; i < this.state.result.list.length; i++) {
-      item = this.state.result.list[i];
-      if (item._id == itemId) {
-        this.setState({ currUri: item.uri, currId: item._id });
-        return;
-      }
-    }
+    let curr;
+    curr = this.state.result.find((item) => item._id == itemId);
+    this.setState({ currUri: curr.uri, currId: curr._id });
+    // for (let i = 0; i < this.state.result.list.length; i++) {
+    //   item = this.state.result.list[i];
+    //   if (item._id == itemId) {
+    //     this.setState({ currUri: item.uri, currId: item._id });
+    //     return;
+    //   }
+    // }
   }
 
   changedSong = (e) => {
@@ -125,23 +127,41 @@ class Room extends Component {
   }
 
   getNextVidId = () => {
+    let index;
+
+    if (!this.state.result || !this.state.result.list) {
+      return -1;
+    }
+    //first vid
     if (this.state.currId == -1 && this.state.result.list.length > 0) {
       return this.state.result.list[0]._id;
     }
-    for (let i = 0; i < this.state.result.list.length - 1; i++) {
-      if (this.state.result.list[i]._id == this.state.currId) {
-        return this.state.result.list[i + 1]._id;
-      }
+    index = this.state.result.list.findIndex(item => item._id == this.state.currId);
+
+    if (index > -1) {
+      return this.state.result.list[index + 1]._id;
     }
+    // for (let i = 0; i < this.state.result.list.length - 1; i++) {
+    //   if (this.state.result.list[i]._id == this.state.currId) {
+    //     return this.state.result.list[i + 1]._id;
+    //   }
+    // }
     return -1;
   }
 
   getUriById = (vidId) => {
-    for (let i = 0; i < this.state.result.list.length; i++) {
-      if (this.state.result.list[i]._id == vidId) {
-        return this.state.result.list[i].uri;
+    let vid;
+    if (this.state.result && this.state.result.list && this.state.result.list.length > 0) {
+      vid = this.state.result.list.find(item => item._id == vidId);
+      if (vid) {
+        return vid.uri;
       }
     }
+    // for (let i = 0; i < this.state.result.list.length; i++) {
+    //   if (this.state.result.list[i]._id == vidId) {
+    //     return this.state.result.list[i].uri;
+    //   }
+    // }
     return "#";
   }
 
@@ -161,22 +181,19 @@ class Room extends Component {
       this.setState({ error: true, showSearchList: false });
       return;
     }
-
     let songList = [];
     for (let i = 0; i < result.length; i++) {
       songList.push({ title: result[i].title, desc: result[i].description, img: result[i].thumbnails.default.url, id: result[i].sid });
     }
-    console.log("newSearchList");
     this.setState({ songList: songList, error: false, showSearchList: true });
   }
 
   searchSong = (e) => {
-    this.setState({ showSearchList: false });
     clearTimeout(this.state.searchTO);
     this.setState({
+      showSearchList: false,
       searchTO: setTimeout(function (value, that) {
         if (value.length < 3) {
-          console.log("short");
           that.setState({ showSearchList: false });
           return;
         }
@@ -189,7 +206,6 @@ class Room extends Component {
   }
 
   addMusic = (vidId) => {
-    console.log(vidId);
     this.setState({ showSearchList: false });
     this.state.socket.emit('add_to_list', {
       _id: this.props.match.params.number,

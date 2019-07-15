@@ -101,6 +101,9 @@ class Room extends Component {
 
   changeMusic = (itemId, event) => {
     let curr;
+    if (!this.state.result || !this.state.result.list) {
+      return -1;
+    }
     curr = this.state.result.list.find((item) => item._id == itemId);
     this.setState({ currUri: curr.uri, currId: curr._id });
   }
@@ -140,12 +143,13 @@ class Room extends Component {
 
   onPlayerStateChange = (event) => {
     //end of playlist
-    if (event.data == 0 && this.getNextVidId() == -1) {
+    let nextVid = this.getNextVidId();
+    if (event.data == 0 && nextVid == -1) {
       this.setState({ end: true });
     }
     //move to next video
     else if (event.data === 0) {
-      this.setState({ currId: this.getNextVidId() })
+      this.setState({ currId: nextVid })
     }
   }
 
@@ -202,6 +206,12 @@ class Room extends Component {
     }
 
   }
+  errorMsg = () => {
+    let result = (this.state.error) ? <div className="error">
+      {this.state.errorMsg}
+    </div> : null
+    return result;
+  }
 
   render() {
     return (
@@ -210,9 +220,7 @@ class Room extends Component {
         <div className="show-room">
           <div className="add-media">
             {this.searchMethod(this.state.searchType)}
-            {(this.state.error) ? <div className="error">
-              {this.state.errorMsg}
-            </div> : null}
+            {this.errorMsg()}
           </div>
           <div className="media-container">
             <div className="player">

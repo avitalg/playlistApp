@@ -7,6 +7,7 @@ import MusicItem from './MusicItem';
 import SearchList from './SearchList';
 import Loader from './Loader';
 import socketIOClient from "socket.io-client";
+import debounce from 'debounce';
 
 class Room extends Component {
   constructor(props) {
@@ -39,7 +40,6 @@ class Room extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-
     //last song on the list wont change currUri;
     if (this.state.currId == -1 && prevState.currId != 1) {
       return;
@@ -49,7 +49,6 @@ class Room extends Component {
       this.setState({ currUri: this.getUriById(this.state.currId) });
       this.updateCurrVid();
     }
-
   }
 
   updateCurrVid = () => {
@@ -85,7 +84,7 @@ class Room extends Component {
   }
 
   addToList = () => {
-    let that = this, data = { uri: that.state.addUri };
+    let that = this;
     this.state.socket.emit('add_to_list', {
       _id: this.props.match.params.number,
       uri: that.state.addUri
@@ -96,30 +95,15 @@ class Room extends Component {
   showList = () => {
     let list;
     if (this.state.result.list) {
-      list = this.state.result.list.map(item => {
-        return (
-          <MusicItem {...item} />
-        )
-      })
+      list = this.state.result.list.map(item => (<MusicItem {...item} />));
     }
     return list;
-  }
-
-  check = () => {
-    console.log(this.state.result);
   }
 
   changeMusic = (itemId, event) => {
     let curr;
     curr = this.state.result.find((item) => item._id == itemId);
     this.setState({ currUri: curr.uri, currId: curr._id });
-    // for (let i = 0; i < this.state.result.list.length; i++) {
-    //   item = this.state.result.list[i];
-    //   if (item._id == itemId) {
-    //     this.setState({ currUri: item.uri, currId: item._id });
-    //     return;
-    //   }
-    // }
   }
 
   changedSong = (e) => {
@@ -136,16 +120,11 @@ class Room extends Component {
     if (this.state.currId == -1 && this.state.result.list.length > 0) {
       return this.state.result.list[0]._id;
     }
+    //next vid
     index = this.state.result.list.findIndex(item => item._id == this.state.currId);
-
     if (index > -1) {
       return this.state.result.list[index + 1]._id;
     }
-    // for (let i = 0; i < this.state.result.list.length - 1; i++) {
-    //   if (this.state.result.list[i]._id == this.state.currId) {
-    //     return this.state.result.list[i + 1]._id;
-    //   }
-    // }
     return -1;
   }
 
@@ -157,11 +136,6 @@ class Room extends Component {
         return vid.uri;
       }
     }
-    // for (let i = 0; i < this.state.result.list.length; i++) {
-    //   if (this.state.result.list[i]._id == vidId) {
-    //     return this.state.result.list[i].uri;
-    //   }
-    // }
     return "#";
   }
 
@@ -188,20 +162,34 @@ class Room extends Component {
     this.setState({ songList: songList, error: false, showSearchList: true });
   }
 
+  debounceSearch = debounce(function(query){
+    if (query.length < 3) {
+      this.setState({ showSearchList: false });
+      return;
+    }
+    this.state.socket.emit('search_song', {
+      _id: this.props.match.params.number,
+      q: query
+    });
+  }, 700);
+
   searchSong = (e) => {
-    clearTimeout(this.state.searchTO);
+    //clearTimeout(this.state.searchTO);
+
+    this.debounceSearch(e.target.value);
+
     this.setState({
-      showSearchList: false,
-      searchTO: setTimeout(function (value, that) {
-        if (value.length < 3) {
-          that.setState({ showSearchList: false });
-          return;
-        }
-        that.state.socket.emit('search_song', {
-          _id: that.props.match.params.number,
-          q: value
-        });
-      }, 700, e.target.value, this)
+      showSearchList: false
+      // searchTO: setTimeout(function (value, that) {
+      //   if (value.length < 3) {
+      //     that.setState({ showSearchList: false });
+      //     return;
+      //   }
+      //   that.state.socket.emit('search_song', {
+      //     _id: that.props.match.params.number,
+      //     q: value
+      //   });
+      // }, 700, e.target.value, this)
     });
   }
 

@@ -1,0 +1,12 @@
+.sharing ul{
+	padding: 0;
+}
+
+.sharing li{
+	display:inline-block;
+	margin: 5px 20px;
+}
+
+.sharing img{
+	height: 25px;
+}

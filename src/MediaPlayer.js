@@ -47,7 +47,7 @@ class MediaPlayer extends Component {
     return "//www.youtube.com/embed/" + this.getId(this.props.uri);
   }
 
-  render() {
+  showVid = () => {
     return (
       (this.getId(this.props.uri) === "false") ? <div className='empty-vid'></div> :
         <YouTube
@@ -56,6 +56,14 @@ class MediaPlayer extends Component {
           onReady={this.onPlayerReady}
           onStateChange={this.props.change}
         />
+    );
+  }
+
+  render() {
+    return (
+      <div className="player">
+        {this.showVid()}
+      </div>
     );
   }
 }

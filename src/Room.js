@@ -3,11 +3,10 @@ import axios from 'axios';
 import './css/Room.css';
 import MusicList from './MusicList';
 import MediaPlayer from './MediaPlayer';
-import MusicItem from './MusicItem';
-import SearchList from './SearchList';
 import Loader from './Loader';
 import socketIOClient from "socket.io-client";
-import debounce from 'debounce';
+import Share from './Share';
+import Search from './Search';
 
 class Room extends Component {
   constructor(props) {
@@ -18,10 +17,8 @@ class Room extends Component {
       currId: -1,
       end: false,
       loader: false,
-      errorMsg: "Oops! Something went wrong ",
+      error: false,
       searchType: "text",
-      songList: [],
-      showSearchList: false,
       searchTO: null,
       socket: socketIOClient(process.env.REACT_APP_API_URL)
     }
@@ -36,7 +33,6 @@ class Room extends Component {
   componentDidMount() {
     this.state.socket.emit("initial_data", { "_id": this.props.match.params.number });
     this.state.socket.on("get_data", this.newDataHandler);
-    this.state.socket.on("search_song", this.newSearchList);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -66,7 +62,7 @@ class Room extends Component {
 
   newDataHandler = (data) => {
     if (!data || data.status === 'failure') {
-      this.setState({ error: true });
+      window.location.href = "/404";
       return;
     }
 
@@ -83,22 +79,6 @@ class Room extends Component {
 
   }
 
-  addToList = () => {
-    let that = this;
-    this.state.socket.emit('add_to_list', {
-      _id: this.props.match.params.number,
-      uri: that.state.addUri
-    });
-  }
-
-  showList = () => {
-    let list;
-    if (this.state.result.list) {
-      list = this.state.result.list.map(item => (<MusicItem {...item} />));
-    }
-    return list;
-  }
-
   changeMusic = (itemId, event) => {
     let curr;
     if (!this.state.result || !this.state.result.list) {
@@ -106,10 +86,6 @@ class Room extends Component {
     }
     curr = this.state.result.list.find((item) => item._id == itemId);
     this.setState({ currUri: curr.uri, currId: curr._id });
-  }
-
-  changedSong = (e) => {
-    this.setState({ addUri: e.target.value });
   }
 
   getNextVidId = () => {
@@ -153,64 +129,11 @@ class Room extends Component {
     }
   }
 
-  newSearchList = (result) => {
-    if (!result || result.status === 'failure') {
-      this.setState({ error: true, showSearchList: false });
-      return;
-    }
-    let songList = [];
-    for (let i = 0; i < result.length; i++) {
-      songList.push({ title: result[i].title, desc: result[i].description, img: result[i].thumbnails.default.url, id: result[i].sid });
-    }
-    this.setState({ songList: songList, error: false, showSearchList: true });
-  }
-
-  debounceSearch = debounce(function (query) {
-    if (query.length < 3) {
-      this.setState({ showSearchList: false });
-      return;
-    }
-    this.state.socket.emit('search_song', {
-      _id: this.props.match.params.number,
-      q: query
-    });
-  }, 700);
-
-  searchSong = (e) => {
-    this.debounceSearch(e.target.value);
-
-    this.setState({
-      showSearchList: false
-    });
-  }
-
   addMusic = (vidId) => {
-    this.setState({ showSearchList: false });
     this.state.socket.emit('add_to_list', {
       _id: this.props.match.params.number,
       uri: "https://www.youtube.com/watch?v=" + vidId
     });
-  }
-
-  searchMethod = (type = "text") => {
-    switch (type) {
-      case "url":
-        return (
-          <input type="url" onChange={this.changedSong} placeholder="https://www.youtube.com/watch?v=video_id" />
-        )
-
-      case "text":
-        return <div><input type="text" onKeyUp={this.searchSong} placeholder="Enter a song name..." />
-          {(this.state.showSearchList) ? <SearchList list={this.state.songList} click={this.addMusic} /> : null}
-        </div>
-    }
-
-  }
-  errorMsg = () => {
-    let result = (this.state.error) ? <div className="error">
-      {this.state.errorMsg}
-    </div> : null
-    return result;
   }
 
   render() {
@@ -218,17 +141,11 @@ class Room extends Component {
       <div className="App">
         <h1>{this.state.result.name}</h1>
         <div className="show-room">
-          <div className="add-media">
-            {this.searchMethod(this.state.searchType)}
-            {this.errorMsg()}
-          </div>
+          <Search socket={this.state.socket} searchType={this.state.searchType} addMusic={this.addMusic} roomId={this.props.match.params.number} />
+          <Share />
           <div className="media-container">
-            <div className="player">
-              <MediaPlayer uri={this.state.currUri} change={this.onPlayerStateChange} />
-            </div>
-            <div className="list">
-              <MusicList list={this.state.result.list} currUri={this.state.currUri} click={this.changeMusic} />
-            </div>
+            <MediaPlayer uri={this.state.currUri} change={this.onPlayerStateChange} />
+            <MusicList list={this.state.result.list} currUri={this.state.currUri} click={this.changeMusic} />
           </div>
         </div>
       </div>

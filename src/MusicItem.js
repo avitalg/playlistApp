@@ -2,10 +2,11 @@ import React from 'react';
 import './css/MusicItem.css';
 
 const MusicItem = (props) => (
-    <div key={props.item.id}>
-        {props.item.uri}
+    <div className="MusicItem" data-id={props.id} data-curr={props.curr} onClick={(e) => props.click && props.click(props.id, e)} key={props.id}>
+        <span>
+            {props.title}
+        </span>
     </div>
-
 );
 
 export default MusicItem;

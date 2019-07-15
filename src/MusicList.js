@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
+import MusicItem from './MusicItem';
 import './css/MusicList.css';
 
 class MusicList extends Component {
   render() {
     return (
-      <div className="MusicList">
-        {
-          (this.props.list && this.props.list.length > 0) ?
-            this.props.list.map(item => {
-              return (<div className="MusicItem" data-id={item._id} data-curr={this.props.currUri == item.uri} onClick={(e) => this.props.click && this.props.click(item._id, e)} key={item._id}>
-                <span>
-                  {item.title}
-                </span>
-              </div>)
-            }) : <div className="empty-list">Empty List</div>
-        }
+      <div className="list">
+        <div className="MusicList">
+          {
+            (this.props.list && this.props.list.length > 0) ?
+              this.props.list.map(item => {
+                return (<MusicItem id={item._id} curr={this.props.currUri === item.uri} title={item.title} click={this.props.click} key={item._id} />)
+              }) : <div className="empty-list">Empty List</div>
+          }
+        </div>
       </div>
     );
   }

@@ -1,0 +1,17 @@
+import React from 'react';
+import './css/Share.css';
+
+const Share = () => (
+    <div className="sharing">
+        <ul>
+            <li><a href={"whatsapp://send?text=Check out that playlist! " + window.location.href} data-action="share/whatsapp/share" title="Share with whatsapp"><img src={require('./imgs/social_media/whatsapp.png')} /></a></li>
+            <li><a href={"https://www.facebook.com/sharer.php?u=" + window.location.href} target="_blank" title="Share with facebook"><img src={require('./imgs/social_media/facebook.png')} /></a></li>
+            <li><a href={`mailto:?subject=My Rhythmes Playlist&amp;body=Check out that playlist! ${window.location.href}`} title="Share with email"><img src={require('./imgs/social_media/email.png')} /></a></li>
+        </ul>
+    </div>
+)
+
+export default Share;
+
+
+

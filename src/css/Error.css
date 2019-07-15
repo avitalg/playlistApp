@@ -1,3 +1,14 @@
+.error-code{
+	font-weight: 700;
+	font-size: 48px;
+	margin: 10px;
+}
+
+.err-page{
+	margin: 25vh 0;
+
+}
+
 main{
 	text-align: center;
 }

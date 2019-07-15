@@ -8,30 +8,9 @@
   margin-bottom: 50px;
 }
 
-.error{
-  color: red;
-}
-
-.add-media {
-  margin: 10px 10px 40px;
-}
-
-.add-media input {
-  min-width: 400px;
-}
-
-
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   .media-container {
     flex-direction: column;
-  }
-  .add-media button {
-    margin-top: 5px;
-    width: 130px;
-  }
-
-  .add-media input {
-    min-width: 95%;
   }
 }

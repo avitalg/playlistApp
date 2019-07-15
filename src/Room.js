@@ -89,7 +89,6 @@ class Room extends Component {
       _id: this.props.match.params.number,
       uri: that.state.addUri
     });
-
   }
 
   showList = () => {
@@ -102,7 +101,7 @@ class Room extends Component {
 
   changeMusic = (itemId, event) => {
     let curr;
-    curr = this.state.result.find((item) => item._id == itemId);
+    curr = this.state.result.list.find((item) => item._id == itemId);
     this.setState({ currUri: curr.uri, currId: curr._id });
   }
 
@@ -122,7 +121,7 @@ class Room extends Component {
     }
     //next vid
     index = this.state.result.list.findIndex(item => item._id == this.state.currId);
-    if (index > -1) {
+    if (index > -1 && index != this.state.result.list.length - 1) {
       return this.state.result.list[index + 1]._id;
     }
     return -1;
@@ -162,7 +161,7 @@ class Room extends Component {
     this.setState({ songList: songList, error: false, showSearchList: true });
   }
 
-  debounceSearch = debounce(function(query){
+  debounceSearch = debounce(function (query) {
     if (query.length < 3) {
       this.setState({ showSearchList: false });
       return;
@@ -174,22 +173,10 @@ class Room extends Component {
   }, 700);
 
   searchSong = (e) => {
-    //clearTimeout(this.state.searchTO);
-
     this.debounceSearch(e.target.value);
 
     this.setState({
       showSearchList: false
-      // searchTO: setTimeout(function (value, that) {
-      //   if (value.length < 3) {
-      //     that.setState({ showSearchList: false });
-      //     return;
-      //   }
-      //   that.state.socket.emit('search_song', {
-      //     _id: that.props.match.params.number,
-      //     q: value
-      //   });
-      // }, 700, e.target.value, this)
     });
   }
 
@@ -209,7 +196,7 @@ class Room extends Component {
         )
 
       case "text":
-        return <div><input type="text" onKeyUp={this.searchSong} placeholder="Enter song name..." />
+        return <div><input type="text" onKeyUp={this.searchSong} placeholder="Enter a song name..." />
           {(this.state.showSearchList) ? <SearchList list={this.state.songList} click={this.addMusic} /> : null}
         </div>
     }
@@ -219,7 +206,7 @@ class Room extends Component {
   render() {
     return (
       <div className="App">
-        <h1>{this.state.result.name} Room</h1>
+        <h1>{this.state.result.name}</h1>
         <div className="show-room">
           <div className="add-media">
             {this.searchMethod(this.state.searchType)}

@@ -1,53 +1,54 @@
-import React, { Component } from 'react';
-import logo from './imgs/logo-2colors.png';
+import React from 'react';
 import './css/Home.css';
-import Loader from './Loader';
-import axios from 'axios';
+// this component will be rendered by our <___Router>
+const Home = () => (
+    <div className="homepage">
+        <section id="start">
+            <div>
+                <h1>Rhythmes</h1>
+                <p>changes the way you share<br /> music</p>
+            </div>
+        </section>
+        <section className="abilities">
+            <h2>Abilities</h2>
+            <ul className="a-list">
+                <li>
+                    <p>Create a playlist</p>
+                    <figure>
+                        <img className="icon" src={require('./imgs/icons/playlist.png')} />
+                    </figure>
 
-class Home extends Component {
-  constructor() {
-    super();
-    this.state = {
-      loader: false
-    }
-  }
-
-  addRoom = () => {
-    this.setState({ loader: true });
-    var data = { "name": this.state.roomName }, that = this;
-    axios.post(process.env.REACT_APP_API_URL + "/addRoom/", data)
-      .then(res => {
-        that.setState({ loader: false });
-        // let response = JSON.parse(this.responseText);
-        if (res.data && res.data.data && res.data.data._id) {
-          window.location.href = "/room/" + res.data.data._id;
-        }
-        console.log(res);
-      });
-  }
-
-  inputChanged = (e) => {
-    this.setState({ roomName: e.target.value });
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <img className="home-logo" src={logo} alt="home-logo" />
-        <div className="ask-room">
-          <h2>get a room</h2>
-          <input type="text" placeholder="Enter Room Name" onChange={this.inputChanged} />
-          {(!this.state.loader) ?
-            <div className="add-room site-btn" onClick={() => { this.addRoom() }}>
-              Add Room
-           </div> :
-            <Loader />
-          }
-
-        </div>
-      </div>
-    );
-  }
-}
+                </li>
+                <li>
+                    <p>Share between friends</p>
+                    <figure>
+                        <img className="icon" src={require('./imgs/icons/share.png')} />
+                    </figure>
+                </li>
+                <li>
+                    <p>Updated in real time</p>
+                    <figure>
+                        <img className="icon" src={require('./imgs/icons/update.png')} />
+                    </figure>
+                </li>
+                <li>
+                    <p>Get a unique URL</p>
+                    <figure>
+                        <img className="icon" src={require('./imgs/icons/domain.png')} />
+                    </figure>
+                </li>
+                <li>
+                    <p>Search for songs easily</p>
+                    <figure>
+                        <img className="icon" src={require('./imgs/icons/youtube.png')} />
+                    </figure>
+                </li>
+            </ul>
+        </section>
+        <section id="start-now">
+            <h2><a href="/start">Start Now</a></h2>
+        </section>
+    </div>
+)
 
 export default Home;

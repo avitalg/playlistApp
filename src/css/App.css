@@ -13,7 +13,6 @@ h1{
 
 body {
   font-family: 'Raleway', sans-serif;
-  background: #30C5FF;
   color: #292F33;
 }
 
@@ -40,10 +39,12 @@ body {
 
 main {
   min-height: 100vh;
-  border-top-left-radius: 30px;
-  background: white;
-  border: 1px solid transparent;
-  border-top-right-radius: 30px;
+}
+
+
+a, a:hover, a:focus, a:visited{
+  text-decoration: none;
+  color: inherit;
 }
 
 @keyframes App-logo-spin {

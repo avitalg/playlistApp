@@ -13,6 +13,7 @@ const About = () => (
        All you need to do is to open a room and share it with all the relevant people.
         </p>
       <p>So simple, so effective, so accessible. </p>
+      <p>The site was built by Avital Glazer. <br></br>Homepage's images by bruce mars and Moose Photos from Pexels. </p>
     </div>
   </div>
 );

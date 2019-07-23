@@ -12,52 +12,38 @@ class Header extends Component {
   constructor() {
     super();
     this.state = {
-      collapse1: false,
+      collapse: false,
       collapseID: ''
     };
   }
 
-  toggleCollapse = collapseID => () => {
-    this.setState(prevState => ({ collapseID: (prevState.collapseID !== collapseID ? collapseID : '') }));
-  }
-
-  toggleSingleCollapse = collapseId => {
-    this.setState({
-      ...this.state,
-      [collapseId]: !this.state[collapseId]
-    });
-  }
+  toggleMenu = () => {
+    this.setState({ collapse: !this.state.collapse });
+  };
 
   render() {
     return (
       <header id='main-header'>
-        <MDBContainer>
-          <MDBNavbar color="amber lighten-4" dark>
-            <MDBContainer>
-              <MDBNavbarBrand href="/" className="white-text">
-                <div id="logo">
-                  <MediaQuery minWidth={768}>
-                    <img src={logo} alt="logo" />
-                  </MediaQuery>
-                  <MediaQuery maxWidth={767}>
-                    <img src={logoMobile} alt="logo" />
-                  </MediaQuery>
-                </div>
-              </MDBNavbarBrand>
-              <MDBHamburgerToggler color="#fff" id="hamburger1" onClick={() => this.toggleSingleCollapse('collapse1')} />
-              <MDBCollapse isOpen={this.state.collapse1} navbar>
-                <MDBNavbarNav left>
-                  <MDBNavItem active>
-                    <MDBNavLink to="/" onClick={() => this.toggleSingleCollapse('collapse1')}>Home</MDBNavLink>
-                  </MDBNavItem>
-                  <MDBNavItem>
-                    <MDBNavLink to="/about" onClick={() => this.toggleSingleCollapse('collapse1')}>About</MDBNavLink>
-                  </MDBNavItem>
-                </MDBNavbarNav>
-              </MDBCollapse>
-            </MDBContainer>
-          </MDBNavbar>
-        </MDBContainer>
+        <div id="logo">
+          <MediaQuery minWidth={768}>
+            <img src={logo} alt="logo" />
+          </MediaQuery>
+          <MediaQuery maxWidth={767}>
+            <img src={logoMobile} alt="logo" />
+          </MediaQuery>
+        </div>
+        <MediaQuery maxWidth={767}>
+          <div className="hamburger" data-collapse={this.state.collapse} onClick={this.toggleMenu}>
+            <div className="bar1"></div>
+            <div className="bar2"></div>
+            <div className="bar3"></div>
+          </div>
+        </MediaQuery>
+        <ul data-display={this.state.collapse}>
+          <li className={(window.location.pathname == "/") ? "active" : ""}><a href="/">HOME</a></li>
+          <li className={(window.location.pathname == "/start") ? "active" : ""}><a href="/start" >START</a></li>
+          <li className={(window.location.pathname == "/about") ? "active" : ""}><a href="/about">ABOUT</a></li>
+        </ul>
       </header>
     );
   }

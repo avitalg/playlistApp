@@ -1,32 +1,118 @@
-.add-room{
-  padding: 5px;
-  width: 115px;
-  margin: 10px auto;
+.homepage section {
+    min-height: 100vh;
+    text-align: center;
+    background: #fff;
+    display: flex;
+    justify-content: center;
 }
 
-.ask-room{
-  margin-top: 100px;
-  text-transform: capitalize;
+.homepage .icon {
+    width: 80px;
 }
 
-input{
-  border: 1px solid #292F33;
-  border-radius: 4px;
-  box-shadow: none;
-  padding: 5px;
-  height: 40px;
-  width: 50%;
-  font-size: 16px
+.homepage #start {
+    background: url(/bgr/beautiful-cellphone-cute.jpg);
+    background-position: center;
+    background-size: cover;
+    justify-content: flex-end;
+    text-align: center;
+    font-size: 40px;
 }
 
-.home-logo{
-  height: 86px;
-  transition: 2s all;
+.homepage #start h1 {
+    width: 350px;
+    font-size: 60px;
+    line-height: 80px;
+    margin: 0 auto;
+    color: #fff;
+    font-weight: 700;    
+}
+
+.homepage #start div {
+    position: relative;
+    top: 262px;
+    right: 5px;
+    color: #fff;
+    opacity: 1;
+    -webkit-animation: rightenter 3s;
+    animation: rightenter 3s;
+    text-align: left;
+    width: min-content;
+}
+
+.homepage .abilities {
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage h2 {
+    font-size: 50px;
+}
+
+.abilities .a-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+    list-style: none;
+}
+
+.abilities .a-list li {
+    margin: 40px;
+    animation: bottomenter 2s;
+    opacity: 1;
+    position: relative;
+    bottom: 0;
+    transition-timing-function: ease-in-out;
+}
+
+.homepage #start-now {
+    background: url(/bgr/art-background.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+.homepage #start-now h2 {
+    position: relative;
+    top: 200px;
+    color: #fff;
+    cursor: pointer;
+    height: fit-content;
+}
+
+.homepage #start-now a{
+    padding: 5px;
+    border: 1px solid #fff;
+}
+
+
+@keyframes rightenter{
+    0%{
+        right: -10px;
+        opacity:0;
+    }
+}
+
+@keyframes bottomenter{
+    0%{
+        bottom: -100px;
+        opacity:0;
+    }
 }
 
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  .home-logo {
-    display: none;
-  }
+    .homepage #start h1{
+        font-size: 48px;
+    }
+
+    .homepage #start div{
+        top: 25px;
+        right: -46px;
+    }
+
+    .homepage #start{
+        font-size: 20px;
+    }
+
 }

@@ -4,12 +4,12 @@ import './css/Footer.css';
 const Footer = () => (
   <footer id="mainFooter">
     <div className="menu">
-      <ul>
-        <li>Home</li>
-        <li>About</li>
+      {/* <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
         <li></li>
         <li></li>
-      </ul>
+      </ul> */}
     </div>
     <div className="rights">
       ©  {new Date().getFullYear()} Avital Glazer All rights reserved

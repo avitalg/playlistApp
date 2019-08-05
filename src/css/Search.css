@@ -4,6 +4,7 @@
 
 .add-media input {
     min-width: 400px;
+    margin: 0;
 }
 
 .add-media .error {

@@ -15,32 +15,32 @@ const Home = () => (
                 <li>
                     <p>Create a playlist</p>
                     <figure>
-                        <img className="icon" src={require('./imgs/icons/playlist.png')} />
+                        <img className="icon" alt="playlist icon" src={require('./imgs/icons/playlist.png')} />
                     </figure>
 
                 </li>
                 <li>
                     <p>Share between friends</p>
                     <figure>
-                        <img className="icon" src={require('./imgs/icons/share.png')} />
+                        <img className="icon" alt="share icon" src={require('./imgs/icons/share.png')} />
                     </figure>
                 </li>
                 <li>
                     <p>Updated in real time</p>
                     <figure>
-                        <img className="icon" src={require('./imgs/icons/update.png')} />
+                        <img className="icon" alt="update icon" src={require('./imgs/icons/update.png')} />
                     </figure>
                 </li>
                 <li>
                     <p>Get a unique URL</p>
                     <figure>
-                        <img className="icon" src={require('./imgs/icons/domain.png')} />
+                        <img className="icon" alt="domain icon" src={require('./imgs/icons/domain.png')} />
                     </figure>
                 </li>
                 <li>
                     <p>Search for songs easily</p>
                     <figure>
-                        <img className="icon" src={require('./imgs/icons/youtube.png')} />
+                        <img className="icon" alt="youtube" src={require('./imgs/icons/youtube.png')} />
                     </figure>
                 </li>
             </ul>

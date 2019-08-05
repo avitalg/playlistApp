@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import {
-  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContainer,
-  MDBHamburgerToggler
-} from 'mdbreact';
 import MediaQuery from 'react-responsive';
 import logo from './imgs/logo.png';
 import logoMobile from './imgs/logo-mobile.png';
+import { Link } from 'react-router-dom';
 import './css/header.css';
 
 class Header extends Component {
@@ -25,12 +22,15 @@ class Header extends Component {
     return (
       <header id='main-header'>
         <div id="logo">
-          <MediaQuery minWidth={768}>
-            <img src={logo} alt="logo" />
-          </MediaQuery>
-          <MediaQuery maxWidth={767}>
-            <img src={logoMobile} alt="logo" />
-          </MediaQuery>
+          <Link to="/">
+            <MediaQuery minWidth={768}>
+              <img src={logo} alt="logo" />
+            </MediaQuery>
+            <MediaQuery maxWidth={767}>
+              <img src={logoMobile} alt="logo" />
+            </MediaQuery>
+          </Link>
+
         </div>
         <MediaQuery maxWidth={767}>
           <div className="hamburger" data-collapse={this.state.collapse} onClick={this.toggleMenu}>
@@ -40,9 +40,9 @@ class Header extends Component {
           </div>
         </MediaQuery>
         <ul data-display={this.state.collapse}>
-          <li className={(window.location.pathname == "/") ? "active" : ""}><a href="/">HOME</a></li>
-          <li className={(window.location.pathname == "/start") ? "active" : ""}><a href="/start" >START</a></li>
-          <li className={(window.location.pathname == "/about") ? "active" : ""}><a href="/about">ABOUT</a></li>
+          <li className={(window.location.pathname == "/") ? "active" : ""}><Link to="/">HOME</Link></li>
+          <li className={(window.location.pathname == "/start") ? "active" : ""}><Link to="/start" >START</Link></li>
+          <li className={(window.location.pathname == "/about") ? "active" : ""}><Link to="/about">ABOUT</Link></li>
         </ul>
       </header>
     );

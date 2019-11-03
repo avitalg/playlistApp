@@ -7,6 +7,7 @@ import Loader from './Loader';
 import socketIOClient from "socket.io-client";
 import Share from './Share';
 import Search from './Search';
+import Private from './Private';
 
 class Room extends Component {
   constructor(props) {
@@ -143,6 +144,7 @@ class Room extends Component {
         <div className="show-room">
           <Search socket={this.state.socket} searchType={this.state.searchType} addMusic={this.addMusic} roomId={this.props.match.params.number} />
           <Share />
+          <Private private="private" />
           <div className="media-container">
             <MediaPlayer uri={this.state.currUri} change={this.onPlayerStateChange} />
             <MusicList list={this.state.result.list} currUri={this.state.currUri} click={this.changeMusic} />

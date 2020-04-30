@@ -3,8 +3,8 @@ import YouTube from 'react-youtube';
 import './MediaPlayer.scss';
 
 class MediaPlayer extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       options: {
         height: '390',
@@ -47,13 +47,14 @@ class MediaPlayer extends Component {
   }
 
   showVid = () => {
+    const { uri, change } = this.props;
     return (
-      (this.getId(this.props.uri)) ? <div className='empty-vid'></div> :
+      (this.getId(uri)) ? <div className='empty-vid'></div> :
         <YouTube
-          videoId={this.getId(this.props.uri)}
+          videoId={this.getId(uri)}
           opts={this.state.options}
           onReady={this.onPlayerReady}
-          onStateChange={this.props.change}
+          onStateChange={change}
         />
     );
   }

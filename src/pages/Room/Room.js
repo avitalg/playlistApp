@@ -80,38 +80,39 @@ class Room extends Component {
 
   changeMusic = (itemId, event) => {
     let curr;
-    if (!this.state.result || !this.state.result.list) {
+    const { result } = this.state;
+    if (!result || !result.list) {
       return -1;
     }
-    curr = this.state.result.list.find((item) => item._id == itemId);
+    curr = result.list.find((item) => item._id == itemId);
     this.setState({ currUri: curr.uri, currId: curr._id });
   }
 
   getNextVidId = () => {
     let index;
-
-    if (!this.state.result || !this.state.result.list) {
+    const { result, currId } = this.state;
+    if (!result || !result.list) {
       return -1;
     }
     //first vid
-    if (this.state.currId == -1 && this.state.result.list.length > 0) {
-      return this.state.result.list[0]._id;
+    if (currId == -1 && result.list.length > 0) {
+      return result.list[0]._id;
     }
     //next vid
-    index = this.state.result.list.findIndex(item => item._id == this.state.currId);
-    if (index > -1 && index != this.state.result.list.length - 1) {
-      return this.state.result.list[index + 1]._id;
+    index = result.list.findIndex(item => item._id == currId);
+    if (index > -1 && index != result.list.length - 1) {
+      return result.list[index + 1]._id;
     }
     return -1;
   }
 
   getUriById = (vidId) => {
     let vid;
-    if (this.state.result && this.state.result.list && this.state.result.list.length > 0) {
-      vid = this.state.result.list.find(item => item._id == vidId);
-      if (vid) {
-        return vid.uri;
-      }
+    const { result } = this.state;
+    vid = result && result.list && result.list.length > 0 && 
+      result.list.find(item => item._id == vidId);
+    if (vid) {
+      return vid.uri;
     }
     return '#';
   }
@@ -136,15 +137,28 @@ class Room extends Component {
   }
 
   render() {
+    const { socket, searchType, currUri, result } = this.state;
     return (
-      <div className='App'>
+      <div className='PlaylistApp'>
         <h1>{this.state.result.name}</h1>
         <div className='show-room'>
-          <Search socket={this.state.socket} searchType={this.state.searchType} addMusic={this.addMusic} roomId={this.props.match.params.number} />
+          <Search 
+            socket={socket} 
+            searchType={searchType} 
+            addMusic={this.addMusic} 
+            roomId={this.props.match.params.number} 
+          />
           <Share />
           <div className='media-container'>
-            <MediaPlayer uri={this.state.currUri} change={this.onPlayerStateChange} />
-            <MusicList list={this.state.result.list} currUri={this.state.currUri} click={this.changeMusic} />
+            <MediaPlayer 
+              uri={currUri} 
+              change={this.onPlayerStateChange} 
+            />
+            <MusicList 
+              list={result.list} 
+              currUri={currUri} 
+              click={this.changeMusic} 
+            />
           </div>
         </div>
       </div>

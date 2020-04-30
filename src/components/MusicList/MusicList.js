@@ -4,13 +4,21 @@ import './MusicList.scss';
 
 class MusicList extends Component {
   render() {
+    const { list, currUri, click } = this.props;
     return (
       <div className='list'>
         <div className='MusicList'>
           {
-            (this.props.list && this.props.list.length > 0) ?
-              this.props.list.map(item => {
-                return (<MusicItem id={item._id} curr={this.props.currUri === item.uri} title={item.title} click={this.props.click} key={item._id} />)
+            (list && list.length > 0) ?
+              list.map(item => {
+                return (
+                <MusicItem 
+                  id={item._id} 
+                  curr={currUri === item.uri} 
+                  title={item.title} 
+                  click={click} 
+                  key={item._id} 
+                  />)
               }) : <div className='empty-list'>Empty List</div>
           }
         </div>

@@ -1,0 +1,72 @@
+.App {
+  text-align: center;
+}
+
+h1{
+  margin: 30px;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  color: #292F33;
+}
+
+.site-btn{
+  background: #30C5FF;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 50px;
+  padding: 5px 15px;
+  cursor: pointer;
+  border:2px solid #fff;
+  text-transform: uppercase;
+  transition: 0.2s all;
+  &:focus,&:visited{
+    outline: none;
+  }
+  &:hover{
+    background: #fff;
+    border:2px solid #30C5FF;
+    color: #30C5FF;
+  }
+}
+
+main {
+  min-height: 100vh;
+  padding-top: 100px;
+}
+a {
+  &, &:hover, &:focus, &:visited{
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  main {
+    height: 100%;
+  }
+
+  body{
+    background: #fff;
+  }
+
+  #main-header{
+    background: #030b36;
+  }
+}

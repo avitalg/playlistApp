@@ -1,0 +1,33 @@
+.add-room{
+  padding: 5px;
+  width: 200px;
+  margin: 10px auto;
+}
+
+.ask-room{
+  margin-top: 100px;
+  text-transform: capitalize;
+}
+
+input{
+  border: 1px solid #292F33;
+  border-radius: 4px;
+  box-shadow: none;
+  padding: 5px;
+  height: 40px;
+  width: 50%;
+  font-size: 16px;
+  margin: 40px 0;
+}
+
+.home-logo{
+  height: 86px;
+  transition: 2s all;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .home-logo {
+    display: none;
+  }
+}

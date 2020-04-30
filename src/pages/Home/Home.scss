@@ -1,0 +1,149 @@
+.homepage {
+    section {
+        min-height: 100vh;
+        text-align: center;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+    }
+    .icon {
+        width: 80px;
+    }
+    #start {
+        background: url(/imgs/bgr/crowd-of-people.jpg);
+        background-position: center;
+        background-size: cover;
+        justify-content: space-around;
+        text-align: center;
+        font-size: 40px;
+        flex-flow: column;
+        h1 {
+            width: 350px;
+            font-size: 60px;
+            line-height: 80px;
+            margin: 0 auto;
+            color: #fff;
+            font-weight: 700;    
+        }
+        .start-content {
+            position: relative;
+            top: 50px;    
+            left: 10%;
+            color: #fff;
+            opacity: 1;
+            -webkit-animation: rightenter 3s;
+            animation: rightenter 3s;
+            text-align: left;
+            width: min-content;
+        }
+    }
+    .start-btn{
+        border: 1px solid white;
+        border-radius: 5px;
+        color: #fff;
+        width: 500px;
+        left: 10%;
+        position: relative;
+        cursor: pointer;
+        &:hover{
+            background: #fff;
+            color: #030b36;
+        }
+    }
+
+    .abilities {
+        display: flex;
+        flex-direction: column;
+        .a-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 90%;
+            margin: 0 auto;
+            list-style: none;
+            padding: 0;
+            li {
+                margin: 40px;
+                animation: bottomenter 2s;
+                opacity: 1;
+                position: relative;
+                bottom: 0;
+                transition-timing-function: ease-in-out;
+            }
+            
+        }
+    }
+    h2 {
+        font-size: 50px;
+    }
+    .explain {
+        background: #F0F0F0;
+        align-items: center;
+        justify-content: space-evenly;
+        font-size: 22px;
+        padding: 0 20px;
+        div {
+            width: 50%;
+        }
+    }
+
+    .explained-pic {
+        width: 400px;
+        box-shadow: 6px 5px 12px;
+        border-radius: 4px;
+    }
+    
+    #start-now {
+        background: url(/imgs/bgr/art-background.jpg);
+        background-position: center;
+        background-size: cover;
+        h2 {
+            position: relative;
+            top: 200px;
+            color: #fff;
+            cursor: pointer;
+            height: fit-content;
+        }
+        a{
+            padding: 5px;
+            border: 1px solid #fff;
+            &:hover {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+    
+}
+
+@keyframes rightenter{
+    0%{
+        right: -10px;
+        opacity:0;
+    }
+}
+
+@keyframes bottomenter{
+    0%{
+        bottom: -100px;
+        opacity:0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .homepage {
+        #start {
+            font-size: 20px;
+            h1{
+                font-size: 48px;
+            }
+            div{
+                top: 25px;
+                right: -46px;
+            }
+        }
+        .abilities{
+            padding-top: 50px;
+        }
+    }
+}

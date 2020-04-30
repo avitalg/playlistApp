@@ -1,10 +1,10 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Start from './Start.js';
-import About from './About.js';
-import Room from './Room.js';
-import Error from './404.js';
-import Home from './Home.js';
+import Start from './pages/Start/Start';
+import About from './pages/About/About';
+import Room from './pages/Room/Room';
+import Error from './pages/Error/Error';
+import Home from './pages/Home/Home';
 
 const Main = () => (
   <main>

@@ -1,0 +1,30 @@
+.search-list {
+    ul{
+        list-style-type: none;
+        padding: 0;
+        width: 50%;
+        margin: 0 auto;
+        li{
+            padding: 10px;
+            text-align: left;
+            border: 1px solid black;
+            cursor: pointer;
+            transition: 0.2s all;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            &:hover{
+                background: #f1f1f1;
+            }
+        }        
+    }
+    
+}
+
+@media only screen and (max-width: 768px) {
+    .search-list {
+        ul{
+            width: 95%;
+        }
+    }
+}
